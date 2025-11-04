@@ -1,0 +1,24 @@
+[0m[[0m[0minfo[0m] [0m[0mFast optimizing C:\Users\chebi\Downloads\ProyectoFinalLenguajesProgramacion-main\ProyectoFinalLenguajesProgramacion-main\frontend\target\scala-2.13\frontend-fastopt[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: Compute reachability: 397618 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: Assemble LinkedClasses: 50382 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: 480908 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Batch mode: true[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Incremental part: 201049 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Optimizing 5449 methods.[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Optimizer part: 858253 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: 1069603 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: Compute reachability: 64281 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: Assemble LinkedClasses: 15144 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: 82124 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Calculate Dependency Info: 2930 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Analyze Modules: 899 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Assemble Modules: 7659 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: 13018 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Generate Classes: 827612 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Write trees: 56997 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Class tree cache stats: reused: 0 -- invalidated: 714[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Method tree cache stats: reused: 0 -- invalidated: 2636[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: 931003 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mBasicBackend: Write result: 238944 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mBasicBackend: total top-level trees: 6468; re-computed: 6468[0m
+[0m[[0m[0mdebug[0m] [0m[0mBasicBackend: total modules: 1; re-written: 1[0m
