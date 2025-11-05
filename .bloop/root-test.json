@@ -1,0 +1,168 @@
+{
+    "version": "1.4.0",
+    "project": {
+        "name": "root-test",
+        "directory": "D:\\ProyectoFinalLenguajesFront-main",
+        "workspaceDir": "D:\\ProyectoFinalLenguajesFront-main",
+        "sources": [
+            "D:\\ProyectoFinalLenguajesFront-main\\src\\test\\scala",
+            "D:\\ProyectoFinalLenguajesFront-main\\src\\test\\scala-2.12",
+            "D:\\ProyectoFinalLenguajesFront-main\\src\\test\\scala-2",
+            "D:\\ProyectoFinalLenguajesFront-main\\src\\test\\java",
+            "D:\\ProyectoFinalLenguajesFront-main\\target\\scala-2.12\\src_managed\\test"
+        ],
+        "dependencies": [
+            "root",
+            "frontend-test"
+        ],
+        "classpath": [
+            "D:\\ProyectoFinalLenguajesFront-main\\.bloop\\root\\scala-2.12\\classes",
+            "C:\\Users\\HP - Victus\\.sbt\\boot\\scala-2.12.20\\lib\\scala-library.jar"
+        ],
+        "out": "D:\\ProyectoFinalLenguajesFront-main\\.bloop\\root",
+        "classesDir": "D:\\ProyectoFinalLenguajesFront-main\\.bloop\\root\\scala-2.12\\test-classes",
+        "resources": [
+            "D:\\ProyectoFinalLenguajesFront-main\\src\\test\\resources",
+            "D:\\ProyectoFinalLenguajesFront-main\\target\\scala-2.12\\resource_managed\\test"
+        ],
+        "scala": {
+            "organization": "org.scala-lang",
+            "name": "scala-compiler",
+            "version": "2.12.20",
+            "options": [
+                
+            ],
+            "jars": [
+                "C:\\Users\\HP - Victus\\.sbt\\boot\\scala-2.12.20\\lib\\scala-library.jar",
+                "C:\\Users\\HP - Victus\\.sbt\\boot\\scala-2.12.20\\lib\\scala-compiler.jar",
+                "C:\\Users\\HP - Victus\\.sbt\\boot\\scala-2.12.20\\lib\\scala-reflect.jar",
+                "C:\\Users\\HP - Victus\\.sbt\\boot\\scala-2.12.20\\lib\\scala-xml_2.12-2.3.0.jar"
+            ],
+            "setup": {
+                "order": "mixed",
+                "addLibraryToBootClasspath": true,
+                "addCompilerToClasspath": false,
+                "addExtraJarsToClasspath": false,
+                "manageBootClasspath": true,
+                "filterLibraryFromClasspath": true
+            }
+        },
+        "java": {
+            "options": [
+                
+            ]
+        },
+        "test": {
+            "frameworks": [
+                {
+                    "names": [
+                        "org.scalacheck.ScalaCheckFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs2.runner.Specs2Framework",
+                        "org.specs2.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.specs.runner.SpecsFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "org.scalatest.tools.Framework",
+                        "org.scalatest.tools.ScalaTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "com.novocode.junit.JUnitFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "munit.Framework"
+                    ]
+                },
+                {
+                    "names": [
+                        "zio.test.sbt.ZTestFramework"
+                    ]
+                },
+                {
+                    "names": [
+                        "weaver.framework.CatsEffect"
+                    ]
+                },
+                {
+                    "names": [
+                        "hedgehog.sbt.Framework"
+                    ]
+                }
+            ],
+            "options": {
+                "excludes": [
+                    
+                ],
+                "arguments": [
+                    
+                ]
+            }
+        },
+        "platform": {
+            "name": "jvm",
+            "config": {
+                "home": "C:\\Users\\HP - Victus\\AppData\\Local\\Coursier\\cache\\arc\\https\\github.com\\adoptium\\temurin17-binaries\\releases\\download\\jdk-17.0.16%252B8\\OpenJDK17U-jdk_x64_windows_hotspot_17.0.16_8.zip\\jdk-17.0.16+8",
+                "options": [
+                    "-Duser.dir=D:\\ProyectoFinalLenguajesFront-main"
+                ]
+            },
+            "mainClass": [
+                
+            ]
+        },
+        "resolution": {
+            "modules": [
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.20",
+                    "configurations": "default",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "C:\\Users\\HP - Victus\\.sbt\\boot\\scala-2.12.20\\lib\\scala-library.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\HP - Victus\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\scala-lang\\scala-library\\2.12.20\\scala-library-2.12.20-sources.jar"
+                        }
+                    ]
+                },
+                {
+                    "organization": "org.scala-lang",
+                    "name": "scala-library",
+                    "version": "2.12.20",
+                    "configurations": "optional",
+                    "artifacts": [
+                        {
+                            "name": "scala-library",
+                            "path": "C:\\Users\\HP - Victus\\.sbt\\boot\\scala-2.12.20\\lib\\scala-library.jar"
+                        },
+                        {
+                            "name": "scala-library",
+                            "classifier": "sources",
+                            "path": "C:\\Users\\HP - Victus\\AppData\\Local\\Coursier\\Cache\\v1\\https\\repo1.maven.org\\maven2\\org\\scala-lang\\scala-library\\2.12.20\\scala-library-2.12.20-sources.jar"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tags": [
+            "test"
+        ]
+    }
+}
