@@ -7,200 +7,242 @@ import com.raquo.laminar.nodes.ReactiveHtmlElement
 import org.scalajs.dom.html
 
 object AdminView {
+
   def apply(
     currentView: Var[HtmlElement],
-    librosVar: Var[List[PaginaPrincipal.Libro]] // Asumiendo PaginaPrincipal.Libro es el tipo correcto
+    librosVar: Var[List[PaginaPrincipal.Libro]]
   ): HtmlElement = {
 
     val adminEmail = dom.window.localStorage.getItem("email")
 
-    // --- Helper function for Admin Tiles ---
-    def adminTile(text: String, iconCode: String, bgColor: String, onClickAction: => Unit) = {
-      // Define reactive state for hover effects for each tile
-      val isHovered = Var(false)
+    // ------------------ TARJETAS DE ADMIN ------------------
+    def adminCard(text: String, icon: String)(action: => Unit) = {
+      val hover = Var(false)
 
-      button(
-        // Conditional style based on hover state
-        styleAttr <-- isHovered.signal.map { hovered =>
-          val baseStyle = s"""
+      div(
+        styleAttr <-- hover.signal.map { h =>
+          s"""
+            width: 240px;
+            height: 170px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: ${if (h) "0 10px 22px rgba(0,0,0,0.15)" else "0 4px 12px rgba(0,0,0,0.10)"};
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            padding: 30px 20px;
-            background-color: $bgColor;
-            color: white;
-            border: none;
-            border-radius: 10px;
+            align-items: center;
             cursor: pointer;
-            font-size: 1.3em;
-            font-weight: 500;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-            text-decoration: none;
+            transition: all 0.2s ease;
+            transform: ${if (h) "translateY(-5px)" else "translateY(0)"};
           """
-          if (hovered) {
-            s"$baseStyle transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.2);"
-          } else {
-            s"$baseStyle transform: translateY(0); box-shadow: 0 4px 8px rgba(0,0,0,0.1);"
-          }
         },
-        // Event handlers for mouse enter/leave to update isHovered
-        // CORRECTED: Use --> to update the Var directly
-        onMouseOver --> { _ => isHovered.set(true) },
-        onMouseOut --> { _ => isHovered.set(false) },
-        onClick --> { _ => onClickAction },
+        onMouseOver --> (_ => hover.set(true)),
+        onMouseOut  --> (_ => hover.set(false)),
+        onClick --> (_ => action),
+
         i(
-          styleAttr := s"font-family: 'Font Awesome 6 Free'; font-weight: 900; font-size: 3em; margin-bottom: 15px; content: '$iconCode';"
+          className := s"fa-solid $icon",
+          styleAttr := "font-size: 38px; color: #e67e22; margin-bottom: 15px;"
         ),
-        span(text)
+
+        span(
+          text,
+          styleAttr := "font-size: 1.1em; font-weight: 600; color: #333;"
+        )
       )
     }
-    // --- End Helper function ---
 
+    // ------------------ DISEÑO GENERAL ------------------
     div(
-      // contenedor general
       styleAttr := """
+        width: 100%;
+        min-height: 100vh;
+        height: auto;
         display: flex;
         flex-direction: column;
-        height: 100vh;
+        background-image: url('/frontend/inicioSesion.png');
+        background-size: 500px;
+        background-repeat: repeat;
+        background-position: center;
         font-family: 'Roboto', sans-serif;
-        background-color: #f0f2f5;
       """,
 
-      // Barra superior
+      // ------------------ BARRA SUPERIOR ------------------
+    div(
+      styleAttr := """
+        width: 100%;
+        height: 100px;
+        background: #e67e22;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 35px;
+        color: white;
+        font-size: 1.3em;
+        font-weight: 600;
+        box-sizing: border-box;
+        overflow: hidden;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+      """,
       div(
-        styleAttr := """
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 12px 25px;
-          background-color: #3498db;
-          box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-          color: white;
-          position: relative;
-          overflow: hidden;
-        """,
-        // Elemento decorativo en la barra superior (onda sutil)
-        div(
-          styleAttr := """
-            position: absolute;
-            bottom: -30px;
-            left: 0;
-            width: 100%;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50% 50% 0 0;
-            transform: rotate(-3deg);
-            transform-origin: bottom center;
-            z-index: 0;
-          """
-        ),
-        span(
-          styleAttr := "font-size: 1.3em; font-weight: 500; z-index: 1;",
-          s"Panel de Administración: $adminEmail"
-        ),
-        button(
-          "Cerrar Sesión",
-          // Reactive hover effect for Logout button
-          // CORRECTED: Use a Var to manage the hover state for the logout button
-          // instead of merging event streams directly for styleAttr.
-          {
-            val isLogoutHovered = Var(false)
-            Seq(
-              styleAttr <-- isLogoutHovered.signal.map { hovered =>
-                val baseStyle = """
-                  color: white;
-                  border: none;
-                  padding: 8px 15px;
-                  border-radius: 5px;
-                  cursor: pointer;
-                  font-size: 0.95em;
-                  transition: background-color 0.2s ease;
-                  z-index: 1;
-                """
-                if (hovered) {
-                  s"$baseStyle background-color: #c0392b;" // Darker red on hover
-                } else {
-                  s"$baseStyle background-color: #e74c3c;" // Original red
-                }
-              },
-              onMouseOver --> { _ => isLogoutHovered.set(true) },
-              onMouseOut --> { _ => isLogoutHovered.set(false) }
+            styleAttr := "display: flex; align-items: center; gap: 10px;",
+            h2(
+              "RecetApp",
+              styleAttr := """
+                font-size: 1.8rem;
+                font-weight: 700;
+                color: #ffffffff;
+                margin: 0;
+                font-family: 'Poppins', sans-serif;
+                text-shadow: 2px 2px 6px rgba(0,0,0,0.4);
+              """
             )
+          ),
+
+      {
+        val hoverLogout = Var(false)
+
+        button(
+          "CERRAR SESIÓN",
+          onClick --> { _ => 
+            currentView.set(RegistroView(currentView, librosVar))
           },
-          onClick --> { _ =>
-            dom.window.localStorage.removeItem("rol")
-            dom.window.localStorage.removeItem("id_persona")
-            dom.window.localStorage.removeItem("email")
-            dom.window.alert("Sesión cerrada correctamente.")
-            currentView.set(PaginaPrincipal(currentView, librosVar))
+          styleAttr :=
+            """background: white;
+              |border: 2px solid #ff6b00;
+              |color: #ff6b00;
+              |font-weight: bold;
+              |padding: 10px 20px;
+              |border-radius: 30px;
+              |cursor: pointer;
+              |font-size: 0.85em;
+              |transition: 0.3s ease;
+            """.stripMargin,
+          
+          onMouseOver --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.backgroundColor = "#ff6b00"
+            btn.style.color = "white"
+            btn.style.border = "2px solid #ff6b00"
+          },
+
+          onMouseOut --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.backgroundColor = "white"
+            btn.style.color = "#ff6b00"
+            btn.style.border = "2px solid #ff6b00"
           }
         )
+      }
+    ),
+
+      // ------------------ BANNER SUPERIOR ------------------
+    div(
+      styleAttr := """
+        width: 100%;
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 80px 10px;
+        font-family: 'Roboto', sans-serif;
+      """,
+
+      // Línea de saludo
+      div(
+        "¡Bienvenido Administrador!",
+        styleAttr := """
+          font-size: 2.4em;
+          font-weight: 800;
+          color: #2c3e50;
+          letter-spacing: 1px;
+          text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        """
       ),
 
-      // Contenido central del panel
+      // Línea de email
+      div(
+        adminEmail,
+        styleAttr := """
+          margin-top: 8px;
+          font-size: 2.2em;
+          font-weight: 600;
+          color: #27ae60;
+          text-shadow: 0px 0px 2px rgba(0,0,0,0.05);
+        """
+      ),
+
+      // Línea decorativa inferior
       div(
         styleAttr := """
-          flex: 1;
+          margin-top: 18px;
+          width: 40%;
+          height: 4px;
+          background: #e67e22;
+          border-radius: 10px;
+        """
+      )
+    ),
+
+      // ------------------ CONTENEDOR DE TARJETAS ------------------
+      div(
+        styleAttr := """
+          className: "fade-in";
+          width: 100%;
           display: flex;
           justify-content: center;
-          align-items: center;
-          padding: 30px;
+          margin-top: -60px;
         """,
 
         div(
           styleAttr := """
-            background-color: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
+            width: 85%;
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 35px;
           """,
 
-          h2(
-            styleAttr := """
-              grid-column: 1 / -1;
-              margin-bottom: 25px;
-              color: #333;
-              font-size: 2em;
-              border-bottom: 2px solid #eee;
-              padding-bottom: 15px;
-            """,
-            "Panel de Administrador"
-          ),
-
-          // Uso de la función adminTile para cada opción con códigos Unicode de Font Awesome
-          adminTile(
-            "Agregar Producto",
-            "\\f055", // Unicode for 'plus-circle'
-            "#3498db",
+          adminCard("Agregar Producto", "fa-plus") {
             currentView.set(AgregarView(currentView, librosVar))
-          ),
-          adminTile(
-            "Eliminar Producto",
-            "\\f057", // Unicode for 'minus-circle'
-            "#e74c3c",
-            currentView.set(EliminarView(currentView, Var(List.empty[EliminarView.LibroCompleto])))
-          ),
-          adminTile(
-            "Ver Reportes",
-            "\\f200", // Unicode for 'chart-line'
-            "#2ecc71",
+          },
+
+          adminCard("Eliminar Producto", "fa-trash") {
+            currentView.set(EliminarView(currentView, Var(List.empty)))
+          },
+
+          adminCard("Informes", "fa-database") {
             currentView.set(ReporteView(currentView, librosVar))
-          ),
-          adminTile(
-            "Añadir Administrador",
-            "\\f007", // Unicode for 'user-plus'
-            "#9b59b6",
+          },
+
+          adminCard("Agregar Administrador", "fa-user-plus") {
             currentView.set(AnadirAdminView(currentView, librosVar))
-          )
+          }
+          
         )
-      )
+      ),
+      // ---------- ANIMACIONES CSS INYECTADAS ----------
+      onMountCallback { _ =>
+        val style = dom.document.createElement("style")
+        style.innerHTML =
+          """
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          """
+        dom.document.head.appendChild(style)
+      }
     )
   }
 }

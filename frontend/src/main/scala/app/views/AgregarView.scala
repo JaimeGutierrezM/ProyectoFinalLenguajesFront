@@ -108,79 +108,232 @@ object AgregarView {
       }
     }
 
-    // 🔹 Vista
+  div(
+    styleAttr := """
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding-top: 40px;
+      min-height: 100vh;
+      background-image: url('/frontend/inicioSesion.png');
+      background-size: 500px;
+      background-repeat: repeat;
+      background-position: center;
+      font-family: 'Roboto', sans-serif;
+    """,
+
     div(
       styleAttr := """
+        background-color: white;
+        padding: 35px;
+        border-radius: 20px;
+        width: 420px;
         display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background-color: #f0f2f5;
-        font-family: 'Roboto', sans-serif;
+        flex-direction: column;
+        gap: 18px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
       """,
 
-      div(
+      h2(
+        "Agregar Libro",
         styleAttr := """
-          background-color: #fff;
-          padding: 30px;
+          text-align: center;
+          color: #2e7d32;
+          font-size: 26px;
+          font-weight: bold;
+          margin-bottom: 12px;
+        """
+      ),
+
+      // ---------- Nombre ----------
+      label("Nombre de la receta", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      input(
+        placeholder := "Ejemplo: Delicias Caseras",
+        styleAttr := """
+          padding: 12px;
+          font-size: 15px;
+          border: 2px solid #e0e0e0;
           border-radius: 10px;
-          box-shadow: 0 0 15px rgba(0,0,0,0.15);
-          display: flex;
-          flex-direction: column;
-          gap: 12px;
-          width: 350px;
+          width: 100%;
+          transition: 0.2s;
         """,
+        onInput.mapToValue --> nombreVar.writer
+      ),
 
-        h3("Agregar Libro", styleAttr := "text-align: center; font-size: 20px; color: #2c3e50; margin-bottom: 10px;"),
+      // ---------- Precio ----------
+      label("Precio", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      input(
+        typ := "number", stepAttr := "0.01",
+        placeholder := "Ejemplo: 19.99",
+        styleAttr := """
+          padding: 12px;
+          font-size: 15px;
+          border: 2px solid #e0e0e0;
+          border-radius: 10px;
+          width: 100%;
+        """,
+        onInput.mapToValue --> precioVar.writer
+      ),
 
-        label("Nombre del libro", styleAttr := "font-weight: bold; color: #34495e; margin-bottom: 2px;"),
-        input(
-          placeholder := "Ejemplo: El Principito",
-          styleAttr :=
-            """padding: 10px; font-size: 15px; border: 1px solid #ccc; border-radius: 5px; width: 100%;""",
-          onInput.mapToValue --> nombreVar.writer
+      // ---------- Categoría ----------
+      label("Categoría", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      select(
+        onChange.mapToValue --> categoriaSeleccionada.writer,
+        styleAttr := """
+          padding: 12px;
+          font-size: 15px;
+          border: 2px solid #e0e0e0;
+          border-radius: 10px;
+          width: 100%;
+          background-color: #fff;
+        """,
+        children <-- categoriasVar.signal.map(_.map { cat =>
+          option(value := cat.id.toString, cat.nombre)
+        })
+      ),
+
+      // ---------- PDF ----------
+      label("Archivo PDF", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      div(
+        styleAttr := "display: flex; flex-direction: column; gap: 6px;",
+
+        // Botón estilizado
+        button(
+          "Subir PDF",
+          styleAttr := """
+            bwidth: 100%;
+            background: white;
+            border: 2px solid #ff6b00;
+            color: #ff6b00;
+            font-weight: bold;
+            padding: 13px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+          """,
+          onClick --> { _ =>
+            dom.document.getElementById("pdfFileInput").asInstanceOf[dom.html.Input].click()
+          },
+          onMouseOver --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.backgroundColor = "#ff6b00"
+            btn.style.color = "white"
+            btn.style.border = "2px solid #ff6b00"
+          },
+          onMouseOut --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.backgroundColor = "white"
+            btn.style.color = "#ff6b00"
+            btn.style.border = "2px solid #ff6b00"
+          }
         ),
 
-        label("Precio", styleAttr := "font-weight: bold; color: #34495e; margin-bottom: 2px;"),
+        // Input real oculto
         input(
-          typ := "number", stepAttr := "0.01", placeholder := "Ejemplo: 19.99",
-          styleAttr := "padding: 10px; font-size: 15px; border: 1px solid #ccc; border-radius: 5px; width: 100%;",
-          onInput.mapToValue --> precioVar.writer
-        ),
-
-        label("Categoría", styleAttr := "font-weight: bold; color: #34495e; margin-bottom: 2px;"),
-        select(
-          onChange.mapToValue --> categoriaSeleccionada.writer,
-          styleAttr := "padding: 10px; font-size: 15px; border: 1px solid #ccc; border-radius: 5px; width: 100%;",
-          children <-- categoriasVar.signal.map(_.map { cat =>
-            option(value := cat.id.toString, cat.nombre)
-          })
-        ),
-
-        label("Seleccionar PDF", styleAttr := "font-weight: bold; color: #34495e; margin-bottom: 2px;"),
-        input(
-          typ := "file", accept := "application/pdf",
+          idAttr := "pdfFileInput",
+          typ := "file",
+          accept := "application/pdf",
+          styleAttr := "display:none;",
           onChange.mapToFiles --> { files => pdfFileVar.set(files.headOption) }
         ),
 
-        label("Seleccionar imagen de portada", styleAttr := "font-weight: bold; color: #34495e; margin-bottom: 2px;"),
+        // Nombre del archivo
+        child.maybe <-- pdfFileVar.signal.map(_.map(f => 
+          div(
+            s"Archivo: ${f.name}",
+            styleAttr := "font-size: 13px; color: #555; margin-left: 4px;"
+          )
+        ))
+      ),
+
+      // ---------- Imagen ----------
+      label("Imagen de portada", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      div(
+        styleAttr := "display: flex; flex-direction: column; gap: 6px;",
+
+        // Botón estilizado
+        button(
+          "Subir Imagen",
+          styleAttr := """
+            bwidth: 100%;
+            background: white;
+            border: 2px solid #ff6b00;
+            color: #ff6b00;
+            font-weight: bold;
+            padding: 13px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+          """.stripMargin,
+          onClick --> { _ =>
+            dom.document.getElementById("imgFileInput").asInstanceOf[dom.html.Input].click()
+          },
+          onMouseOver --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.backgroundColor = "#ff6b00"
+            btn.style.color = "white"
+            btn.style.border = "2px solid #ff6b00"
+          },
+          onMouseOut --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.backgroundColor = "white"
+            btn.style.color = "#ff6b00"
+            btn.style.border = "2px solid #ff6b00"
+          }
+        ),
+
+        // Input real oculto
         input(
-          typ := "file", accept := "image/*",
+          idAttr := "imgFileInput",
+          typ := "file",
+          accept := "image/*",
+          styleAttr := "display:none;",
           onChange.mapToFiles --> { files => imagenFileVar.set(files.headOption) }
         ),
 
-        button(
-          "Agregar",
-          styleAttr := "background-color: #3498db; color: white; padding: 10px; font-size: 15px; border: none; border-radius: 5px; cursor: pointer;",
-          onClick --> { _ => agregarLibro() }
-        ),
+        // Nombre del archivo
+        child.maybe <-- imagenFileVar.signal.map(_.map(f => 
+          div(
+            s"Imagen: ${f.name}",
+            styleAttr := "font-size: 13px; color: #555; margin-left: 4px;"
+          )
+        ))
+      ),
 
-        button(
-          "Volver",
-          styleAttr := "background-color: #95a5a6; color: white; padding: 10px; font-size: 15px; border: none; border-radius: 5px; cursor: pointer;",
-          onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) }
-        )
+      // ---------- Botón agregar ----------
+      button(
+        "Agregar",
+        styleAttr := """
+          background-color: #2e7d32;
+          color: white;
+          padding: 12px;
+          font-size: 16px;
+          font-weight: bold;
+          border: none;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: 0.2s;
+        """,
+        onClick --> { _ => agregarLibro() }
+      ),
+
+      // ---------- Botón volver ----------
+      a(
+        "← Atrás",
+        href := "#",
+        onClick.preventDefault --> { _ => currentView.set(AdminView(currentView, librosVar)) },
+        styleAttr := """
+          display: block; 
+          margin-top: 20px; 
+          color: #7f8c8d; 
+          text-decoration: none; 
+          font-size: 14px; 
+          text-align: left;
+        """
       )
     )
+  )
   }
 }

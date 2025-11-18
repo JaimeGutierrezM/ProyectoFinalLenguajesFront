@@ -17,32 +17,96 @@ object ProductView {
     // Estado para detalles (si necesitas cargar más detalles, aquí)
     val detalles = Var(libro)
 
+    // Función de estilo para botones de navegación (Volver y Cerrar Sesión)
+    val navButtonStyle = """
+      background-color: #e67e22; 
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 16px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      font-weight: 600;
+      margin: 10px;
+      transition: background-color 0.2s, transform 0.1s;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    """
+    
+    // Handler para efecto hover en botones de navegación
+    val navButtonHover = onMouseOver --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#d35400" }
+    val navButtonOut = onMouseOut --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#e67e22" }
+
     div(
-      button("Volver", onClick --> { _ => currentView.set(ClientView(currentView, Var(List.empty), personaVar, logout)) }),
-      button("Cerrar sesión", onClick --> { _ => logout() }),
+      styleAttr := "min-height: 100vh; background-image: url('/frontend/inicioSesion.png'); background-size: cover; background-position: center; background-repeat: repeat; padding: 20px; display: flex; flex-direction: column; align-items: center;",
+      
+      // Contenedor de botones superiores (Volver y Cerrar Sesión)
       div(
-        styleAttr := "display: flex; flex-direction: column; align-items: center; background: #f8fafc; border-radius: 16px; box-shadow: 0 2px 16px rgba(0,0,0,0.10); padding: 36px 24px; max-width: 420px; margin: 40px auto;",
+        styleAttr := "width: 100%; max-width: 900px; display: flex; justify-content: space-between; margin-bottom: 20px;",
+        
+        button(
+          "Volver", 
+          styleAttr := navButtonStyle,
+          navButtonHover,
+          navButtonOut,
+          // Nota: Asumo que ClientView toma un Var(List.empty) para forzar la recarga de datos.
+          onClick --> { _ => currentView.set(ClientView(currentView, Var(List.empty), personaVar, logout)) }
+        ),
+        
+        button(
+          "Cerrar sesión", 
+          styleAttr := navButtonStyle,
+          navButtonHover,
+          navButtonOut,
+          onClick --> { _ => logout() }
+        )
+      ),
+
+      // Contenedor de Detalles del Producto
+      div(
+        styleAttr := "display: flex; flex-direction: column; align-items: center; background: #fff; border-radius: 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); padding: 40px; max-width: 420px; width: 90%; margin: 20px auto;",
+        
         img(
           src := s"https://tl7vhlzb-8081.brs.devtunnels.ms/frontimg/imagen/${libro.nombreimagen}",
           alt := libro.nombre,
-          width := "220",
-          height := "320",
-          styleAttr := "border-radius: 12px; margin-bottom: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.12); object-fit: cover;"
+          width := "250",
+          height := "350",
+          styleAttr := "border-radius: 12px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); object-fit: cover; background: #f1f2f6;"
         ),
-        h2(libro.nombre, styleAttr := "font-size: 2rem; color: #222; margin-bottom: 10px; font-weight: 700; text-align: center;"),
-        div(libro.nombre_categoria, styleAttr := "color: #636e72; font-size: 1.1rem; margin-bottom: 18px; font-weight: 500;"),
+        
+        h2(libro.nombre, styleAttr := "font-size: 2.2rem; color: #333; margin-bottom: 8px; font-weight: 800; text-align: center;"),
+        
+        div(libro.nombre_categoria, styleAttr := "color: #7f8c8d; font-size: 1.1rem; margin-bottom: 25px; font-weight: 500;"),
+        
         div(
-          styleAttr := "display: flex; align-items: center; gap: 10px; margin-bottom: 12px;",
-          b("Precio:"),
-          span(f"${libro.precio}%.2f", styleAttr := "color: #0984e3; font-size: 1.25rem; font-weight: bold; margin-left: 4px;"),
-          span("$", styleAttr := "color: #636e72; font-size: 1.1rem; font-weight: 500;")
+          styleAttr := "display: flex; align-items: baseline; gap: 8px; margin-bottom: 20px; padding: 5px 15px; border-radius: 8px;",
+          b("Precio:", styleAttr := "font-size: 1.1rem; color: #555;"),
+          // CLAVE: Precio en color naranja de la marca
+          span(f"S/.${libro.precio}%.2f", styleAttr := "color: #e67e22; font-size: 1.8rem; font-weight: bold;"),
+          span("PEN", styleAttr := "color: #636e72; font-size: 1.1rem; font-weight: 500;")
         ),
+        
         button(
-          "Comprar",
+          "Comprar Ahora",
           onClick --> { _ =>
             currentView.set(CompraView(currentView, libro, personaVar, logout))
           },
-          styleAttr := "background: linear-gradient(90deg, #00b894 60%, #0984e3 100%); color: white; border: none; border-radius: 8px; padding: 13px 32px; font-size: 1.1rem; cursor: pointer; font-weight: 700; margin-top: 28px; letter-spacing: 0.5px; box-shadow: 0 1px 6px rgba(0,0,0,0.10); transition: background 0.2s;"
+          // CLAVE: Botón de Compra sólido naranja
+          styleAttr := """
+            background-color: #2e7d32; 
+            color: white; 
+            border: none; 
+            border-radius: 10px; 
+            padding: 15px 40px; 
+            font-size: 1.15rem; 
+            cursor: pointer; 
+            font-weight: 700; 
+            margin-top: 20px; 
+            letter-spacing: 0.8px; 
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.5); 
+            transition: all 0.2s ease;
+          """,
+          onMouseOver --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#1b5e20" },
+          onMouseOut --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#2e7d32" }
         )
       )
     )

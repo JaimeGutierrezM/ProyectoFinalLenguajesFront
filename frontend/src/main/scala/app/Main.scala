@@ -11,10 +11,10 @@ object Main {
       List(
         PaginaPrincipal.Libro(1, "Cocteles para todos", 20.0, "1", "Bebidas", "libro1.pdf", "assets/libro1.jpg"),
         PaginaPrincipal.Libro(2, "Cenas Navideñas llenas de magia", 25.0, "2", "Navideñas", "libro2.pdf", "assets/libro2.jpg"),
-        PaginaPrincipal.Libro(3, "¡Bravazo!", 30.0, "2", "Platos principales", "100.pdf", "assets/100.jpg"),
-        PaginaPrincipal.Libro(4, "Dulces caseros", 22.0, "2", "Postres", "libro3.pdf", "assets/libro3.jpg"),
-        PaginaPrincipal.Libro(5, "Quien te quiere te cocina cerca", 28.0, "3", "Saludable", "libro4.pdf", "assets/libro4.jpg"),
-        PaginaPrincipal.Libro(6, "Recetario invierno", 35.0, "2", "Sopas", "libro5.pdf", "assets/libro5.jpg")
+        PaginaPrincipal.Libro(3, "¡Bravazo!", 30.0, "3", "Platos principales", "libro6.pdf", "assets/libro6.jpg"),
+        PaginaPrincipal.Libro(4, "Dulces caseros", 22.0, "4", "Postres", "libro3.pdf", "assets/libro3.jpg"),
+        PaginaPrincipal.Libro(5, "Quien te quiere te cocina cerca", 28.0, "5", "Saludable", "libro4.pdf", "assets/libro4.jpg"),
+        PaginaPrincipal.Libro(6, "Recetario invierno", 35.0, "6", "Sopas", "libro5.pdf", "assets/libro5.jpg")
       )
     )
 
