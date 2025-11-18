@@ -9090,3 +9090,225 @@ ADVERTENCIA: Unmatched cancel notification for request id 3406
 2025.11.18 16:00:32 INFO  Shut down connection with build server.
 2025.11.18 16:00:32 INFO  Shut down connection with build server.
 2025.11.18 16:00:32 INFO  Exiting server
+2025.11.18 16:10:51 INFO  Started: Metals version 1.6.3 in folders 'D:\ProyectoFinalLenguajesFront' for client Visual Studio Code 1.106.0.
+2025.11.18 16:10:51 ERROR org.h2.jdbc.JdbcSQLNonTransientConnectionException: Archivo corrupto mientras se leía el registro: "D:/ProyectoFinalLenguajesFront/.metals/metals.mv.db". Solución Posible: use la herramienta de recuperación (recovery tool)
+File corrupted while reading record: "D:/ProyectoFinalLenguajesFront/.metals/metals.mv.db". Possible solution: use the recovery tool [90030-240]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.mvstore.db.Store.convertMVStoreException(Store.java:163)
+	at org.h2.mvstore.db.Store.<init>(Store.java:142)
+	at org.h2.engine.Database.<init>(Database.java:328)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:350)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql.DriverManager.getConnection(DriverManager.java:613)
+	at java.sql.DriverManager.getConnection(DriverManager.java:199)
+	at scala.meta.internal.metals.H2ConnectionProvider.upgradeIfNeeded(H2ConnectionProvider.scala:132)
+	at scala.meta.internal.metals.H2ConnectionProvider.persistentConnection(H2ConnectionProvider.scala:108)
+	at scala.meta.internal.metals.H2ConnectionProvider.tryAutoServer(H2ConnectionProvider.scala:62)
+	at scala.meta.internal.metals.H2ConnectionProvider.connect(H2ConnectionProvider.scala:44)
+	at scala.meta.internal.metals.H2ConnectionProvider.connection(H2ConnectionProvider.scala:34)
+	at scala.meta.internal.metals.Tables.$anonfun$dependencySources$1(Tables.scala:23)
+	at scala.meta.internal.metals.DependencySources.getBuildTarget(DependencySources.scala:25)
+	at scala.meta.internal.metals.BuildTargets.$anonfun$inverseSources$2(BuildTargets.scala:260)
+	at scala.Option.flatMap(Option.scala:283)
+	at scala.meta.internal.metals.BuildTargets.inverseSources(BuildTargets.scala:260)
+	at scala.meta.internal.metals.ModuleStatus.refresh(ModuleStatus.scala:45)
+	at scala.meta.internal.metals.WorkspaceLspService.setFocusedDocument(WorkspaceLspService.scala:210)
+	at scala.meta.internal.metals.WorkspaceLspService.didOpen(WorkspaceLspService.scala:460)
+	at scala.meta.metals.lsp.DelegatingScalaService.didOpen(DelegatingScalaService.scala:38)
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.lambda$recursiveFindRpcMethods$0(GenericEndpoint.java:65)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.notify(GenericEndpoint.java:160)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleNotification(RemoteEndpoint.java:231)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:198)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:185)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:97)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:114)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.lang.Thread.run(Thread.java:1474)
+Caused by: org.h2.mvstore.MVStoreException: File is corrupted - unable to recover a valid set of chunks [2.4.240/6]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.RandomAccessStore.readStoreHeader(RandomAccessStore.java:320)
+	at org.h2.mvstore.FileStore.start(FileStore.java:919)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:294)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2164)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:328)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:350)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql.DriverManager.getConnection(DriverManager.java:613)
+	at java.sql.DriverManager.getConnection(DriverManager.java:199)
+	at scala.meta.internal.metals.H2ConnectionProvider.upgradeIfNeeded(H2ConnectionProvider.scala:132)
+	at scala.meta.internal.metals.H2ConnectionProvider.persistentConnection(H2ConnectionProvider.scala:108)
+	at scala.meta.internal.metals.H2ConnectionProvider.tryAutoServer(H2ConnectionProvider.scala:62)
+	at scala.meta.internal.metals.H2ConnectionProvider.connect(H2ConnectionProvider.scala:44)
+	at scala.meta.internal.metals.H2ConnectionProvider.connection(H2ConnectionProvider.scala:34)
+	at scala.meta.internal.metals.Tables.$anonfun$dependencySources$1(Tables.scala:23)
+	at scala.meta.internal.metals.DependencySources.getBuildTarget(DependencySources.scala:25)
+	at scala.meta.internal.metals.BuildTargets.$anonfun$inverseSources$2(BuildTargets.scala:260)
+	at scala.Option.flatMap(Option.scala:283)
+	at scala.meta.internal.metals.BuildTargets.inverseSources(BuildTargets.scala:260)
+	at scala.meta.internal.metals.ModuleStatus.refresh(ModuleStatus.scala:45)
+	at scala.meta.internal.metals.WorkspaceLspService.setFocusedDocument(WorkspaceLspService.scala:210)
+	at scala.meta.internal.metals.WorkspaceLspService.didOpen(WorkspaceLspService.scala:460)
+	at scala.meta.metals.lsp.DelegatingScalaService.didOpen(DelegatingScalaService.scala:38)
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.lambda$recursiveFindRpcMethods$0(GenericEndpoint.java:65)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.notify(GenericEndpoint.java:160)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleNotification(RemoteEndpoint.java:231)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:198)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:185)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:97)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:114)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.lang.Thread.run(Thread.java:1474)
+
+2025.11.18 16:10:51 ERROR unable to setup persistent H2 database with AUTO_SERVER=false, falling back to in-memory database. This means you may be redundantly asked to execute 'Import build', even if it's not needed. Also, code navigation will not work for existing files in the .metals/readonly/ directory. To fix this problem, make sure you only have one running Metals server in the directory 'D:\ProyectoFinalLenguajesFront'.
+org.h2.jdbc.JdbcSQLNonTransientConnectionException: Archivo corrupto mientras se leía el registro: "D:/ProyectoFinalLenguajesFront/.metals/metals.mv.db". Solución Posible: use la herramienta de recuperación (recovery tool)
+File corrupted while reading record: "D:/ProyectoFinalLenguajesFront/.metals/metals.mv.db". Possible solution: use the recovery tool [90030-240]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:690)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:489)
+	at org.h2.message.DbException.get(DbException.java:212)
+	at org.h2.mvstore.db.Store.convertMVStoreException(Store.java:163)
+	at org.h2.mvstore.db.Store.<init>(Store.java:142)
+	at org.h2.engine.Database.<init>(Database.java:328)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:350)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql.DriverManager.getConnection(DriverManager.java:613)
+	at java.sql.DriverManager.getConnection(DriverManager.java:199)
+	at scala.meta.internal.metals.H2ConnectionProvider.upgradeIfNeeded(H2ConnectionProvider.scala:132)
+	at scala.meta.internal.metals.H2ConnectionProvider.persistentConnection(H2ConnectionProvider.scala:108)
+	at scala.meta.internal.metals.Tables.tryNoAutoServer(Tables.scala:37)
+	at scala.meta.internal.metals.H2ConnectionProvider.tryAutoServer(H2ConnectionProvider.scala:73)
+	at scala.meta.internal.metals.H2ConnectionProvider.connect(H2ConnectionProvider.scala:44)
+	at scala.meta.internal.metals.H2ConnectionProvider.connection(H2ConnectionProvider.scala:34)
+	at scala.meta.internal.metals.Tables.$anonfun$dependencySources$1(Tables.scala:23)
+	at scala.meta.internal.metals.DependencySources.getBuildTarget(DependencySources.scala:25)
+	at scala.meta.internal.metals.BuildTargets.$anonfun$inverseSources$2(BuildTargets.scala:260)
+	at scala.Option.flatMap(Option.scala:283)
+	at scala.meta.internal.metals.BuildTargets.inverseSources(BuildTargets.scala:260)
+	at scala.meta.internal.metals.ModuleStatus.refresh(ModuleStatus.scala:45)
+	at scala.meta.internal.metals.WorkspaceLspService.setFocusedDocument(WorkspaceLspService.scala:210)
+	at scala.meta.internal.metals.WorkspaceLspService.didOpen(WorkspaceLspService.scala:460)
+	at scala.meta.metals.lsp.DelegatingScalaService.didOpen(DelegatingScalaService.scala:38)
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.lambda$recursiveFindRpcMethods$0(GenericEndpoint.java:65)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.notify(GenericEndpoint.java:160)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleNotification(RemoteEndpoint.java:231)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:198)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:185)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:97)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:114)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.lang.Thread.run(Thread.java:1474)
+Caused by: org.h2.mvstore.MVStoreException: File is corrupted - unable to recover a valid set of chunks [2.4.240/6]
+	at org.h2.mvstore.DataUtils.newMVStoreException(DataUtils.java:996)
+	at org.h2.mvstore.RandomAccessStore.readStoreHeader(RandomAccessStore.java:320)
+	at org.h2.mvstore.FileStore.start(FileStore.java:919)
+	at org.h2.mvstore.MVStore.<init>(MVStore.java:294)
+	at org.h2.mvstore.MVStore$Builder.open(MVStore.java:2164)
+	at org.h2.mvstore.db.Store.<init>(Store.java:133)
+	at org.h2.engine.Database.<init>(Database.java:328)
+	at org.h2.engine.Engine.openSession(Engine.java:92)
+	at org.h2.engine.Engine.openSession(Engine.java:222)
+	at org.h2.engine.Engine.createSession(Engine.java:201)
+	at org.h2.engine.SessionRemote.connectEmbeddedOrServer(SessionRemote.java:350)
+	at org.h2.jdbc.JdbcConnection.<init>(JdbcConnection.java:124)
+	at org.h2.Driver.connect(Driver.java:59)
+	at java.sql.DriverManager.getConnection(DriverManager.java:613)
+	at java.sql.DriverManager.getConnection(DriverManager.java:199)
+	at scala.meta.internal.metals.H2ConnectionProvider.upgradeIfNeeded(H2ConnectionProvider.scala:132)
+	at scala.meta.internal.metals.H2ConnectionProvider.persistentConnection(H2ConnectionProvider.scala:108)
+	at scala.meta.internal.metals.Tables.tryNoAutoServer(Tables.scala:37)
+	at scala.meta.internal.metals.H2ConnectionProvider.tryAutoServer(H2ConnectionProvider.scala:73)
+	at scala.meta.internal.metals.H2ConnectionProvider.connect(H2ConnectionProvider.scala:44)
+	at scala.meta.internal.metals.H2ConnectionProvider.connection(H2ConnectionProvider.scala:34)
+	at scala.meta.internal.metals.Tables.$anonfun$dependencySources$1(Tables.scala:23)
+	at scala.meta.internal.metals.DependencySources.getBuildTarget(DependencySources.scala:25)
+	at scala.meta.internal.metals.BuildTargets.$anonfun$inverseSources$2(BuildTargets.scala:260)
+	at scala.Option.flatMap(Option.scala:283)
+	at scala.meta.internal.metals.BuildTargets.inverseSources(BuildTargets.scala:260)
+	at scala.meta.internal.metals.ModuleStatus.refresh(ModuleStatus.scala:45)
+	at scala.meta.internal.metals.WorkspaceLspService.setFocusedDocument(WorkspaceLspService.scala:210)
+	at scala.meta.internal.metals.WorkspaceLspService.didOpen(WorkspaceLspService.scala:460)
+	at scala.meta.metals.lsp.DelegatingScalaService.didOpen(DelegatingScalaService.scala:38)
+	at jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.lang.reflect.Method.invoke(Method.java:565)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.lambda$recursiveFindRpcMethods$0(GenericEndpoint.java:65)
+	at org.eclipse.lsp4j.jsonrpc.services.GenericEndpoint.notify(GenericEndpoint.java:160)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.handleNotification(RemoteEndpoint.java:231)
+	at org.eclipse.lsp4j.jsonrpc.RemoteEndpoint.consume(RemoteEndpoint.java:198)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.handleMessage(StreamMessageProducer.java:185)
+	at org.eclipse.lsp4j.jsonrpc.json.StreamMessageProducer.listen(StreamMessageProducer.java:97)
+	at org.eclipse.lsp4j.jsonrpc.json.ConcurrentMessageProcessor.run(ConcurrentMessageProcessor.java:114)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:545)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:328)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	at java.lang.Thread.run(Thread.java:1474)
+
+2025.11.18 16:10:51 WARN  Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2025.11.18 16:10:51 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala. Using presentation compiler with project's scala-library version: 3.3.6
+2025.11.18 16:10:53 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala. Using presentation compiler with project's scala-library version: 3.3.6
+2025.11.18 16:10:53 INFO  Attempting to connect to the build server...
+2025.11.18 16:10:53 INFO  Found a Bloop server running
+2025.11.18 16:10:53 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at D:\ProyectoFinalLenguajesFront\.metals\bsp.trace.json or C:\Users\HP - Victus\AppData\Local\scalameta\metals\cache\bsp.trace.json
+2025.11.18 16:10:53 INFO  Attempting to connect to the build server...
+2025.11.18 16:10:53 INFO  Found a Bloop server running
+2025.11.18 16:10:53 INFO  Attempting to connect to the build server...
+2025.11.18 16:10:53 INFO  Found a Bloop server running
+2025.11.18 16:10:53 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at D:\ProyectoFinalLenguajesFront\project\project\.metals\bsp.trace.json or C:\Users\HP - Victus\AppData\Local\scalameta\metals\cache\bsp.trace.json
+2025.11.18 16:10:53 INFO  tracing is disabled for protocol BSP, to enable tracing of incoming and outgoing JSON messages create an empty file at D:\ProyectoFinalLenguajesFront\project\.metals\bsp.trace.json or C:\Users\HP - Victus\AppData\Local\scalameta\metals\cache\bsp.trace.json
+2025.11.18 16:10:53 INFO  time: Connected to build server in 0.41s
+2025.11.18 16:10:53 INFO  Connected to Build server: Bloop v2.0.16
+2025.11.18 16:10:53 INFO  time: Imported build in 0.11s
+2025.11.18 16:10:54 WARN  2.13.13 is no longer supported in the current Metals versions, using the last known supported version 1.6.2
+2025.11.18 16:10:54 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:10:56 WARN  Using H2 2.4.240 which is newer than the version Flyway has been verified with. The latest verified version of H2 is 2.3.232.
+2025.11.18 16:11:01 INFO  time: indexed workspace in 7.74s
+2025.11.18 16:11:01 WARN  no build target for: D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala
+2025.11.18 16:11:01 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:01 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:01 WARN  no build target for: D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala
+2025.11.18 16:11:02 INFO  Generated JavaScript file 'D:\ProyectoFinalLenguajesFront-main\.bloop\frontend\frontend-test-js'
+2025.11.18 16:11:02 WARN  Cannot discover test frameworks, missing node_modules in test project, expected them at D:\ProyectoFinalLenguajesFront-main\frontend\node_modules
+2025.11.18 16:11:04 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:06 WARN  no build target for: D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala
+2025.11.18 16:11:06 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AgregarView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:07 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AnadirAdminView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:07 WARN  no build target for: D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AnadirAdminView.scala
+2025.11.18 16:11:07 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AnadirAdminView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:07 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AnadirAdminView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:07 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AnadirAdminView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:07 INFO  no build target found for D:\ProyectoFinalLenguajesFront\frontend\src\main\scala\app\views\AnadirAdminView.scala. Using presentation compiler with project's scala-library version: 2.13.17
+2025.11.18 16:11:09 INFO  Shutting down server
+2025.11.18 16:11:09 INFO  shutting down Metals
+2025.11.18 16:11:09 INFO  Shut down connection with build server.
+2025.11.18 16:11:09 INFO  Shut down connection with build server.
+2025.11.18 16:11:09 INFO  Shut down connection with build server.
+2025.11.18 16:11:09 INFO  Exiting server
