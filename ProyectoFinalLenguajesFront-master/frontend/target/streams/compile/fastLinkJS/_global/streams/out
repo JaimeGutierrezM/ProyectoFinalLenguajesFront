@@ -1,0 +1,24 @@
+[0m[[0m[0minfo[0m] [0m[0mFast optimizing C:\Users\xioma\Downloads\ProyectoFinalLenguajesFront-master\ProyectoFinalLenguajesFront-master\frontend\target\scala-2.13\frontend-fastopt[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: Compute reachability: 304943 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: Assemble LinkedClasses: 27313 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mLinker: 347636 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Batch mode: true[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Incremental part: 132533 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Optimizing 6245 methods.[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: Optimizer part: 566117 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mOptimizer: 710405 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: Compute reachability: 56753 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: Assemble LinkedClasses: 10611 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mRefiner: 69780 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Calculate Dependency Info: 2671 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Analyze Modules: 1133 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: Assemble Modules: 6702 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mModule Splitter: 12316 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Generate Classes: 533604 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Write trees: 25958 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Class tree cache stats: reused: 0 -- invalidated: 738[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: Method tree cache stats: reused: 0 -- invalidated: 3077[0m
+[0m[[0m[0mdebug[0m] [0m[0mEmitter: 593966 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mBasicBackend: Write result: 168701 us[0m
+[0m[[0m[0mdebug[0m] [0m[0mBasicBackend: total top-level trees: 7117; re-computed: 7117[0m
+[0m[[0m[0mdebug[0m] [0m[0mBasicBackend: total modules: 1; re-written: 1[0m
