@@ -1,3 +1,17 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala:local21
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -com/raquo/laminar/api/L.dom.
+	 -org/scalajs/dom.
+	 -dom.
+	 -scala/Predef.dom.
+offset: 2863
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -88,7 +102,7 @@ object CompraView {
     """
 
     val navButtonHover =
-      onMouseOver --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#d35400" }
+      onMouseOver --> { _.target.asInstanceOf[@@dom.html.Button].style.backgroundColor = "#d35400" }
     val navButtonOut =
       onMouseOut --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#e67e22" }
 
@@ -245,3 +259,9 @@ object CompraView {
     )
   }
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 

@@ -82,12 +82,12 @@ object FiltroView {
           border-radius: 10px;
         """,
         Seq(
-          ("0", "Bebidas"),
-          ("1", "Navideñas"),
-          ("2", "Postres"),
-          ("3", "Platos principales"),
-          ("4", "Saludables"),
-          ("5", "Sopas")
+          ("0", "Sopas"),
+          ("1", "Bebidas"),
+          ("2", "Navideñas"),
+          ("3", "Postres"),
+          ("4", "Platos Principales"),
+          ("5", "Saludables")
         ).map { case (id, nombre) =>
           button(
             nombre,

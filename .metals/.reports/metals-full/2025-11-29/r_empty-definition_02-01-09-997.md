@@ -1,3 +1,16 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala:local3
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -com/raquo/laminar/api/L.Var#
+	 -Var#
+	 -scala/Predef.Var#
+offset: 359
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -11,7 +24,7 @@ object CompraView {
   def apply(
     currentView: Var[HtmlElement],
     libro: PaginaPrincipal.Libro,
-    personaVar: Var[Option[js.Dynamic]],
+    personaVar: @@Var[Option[js.Dynamic]],
     logout: () => Unit
   ): HtmlElement = {
 
@@ -245,3 +258,9 @@ object CompraView {
     )
   }
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 

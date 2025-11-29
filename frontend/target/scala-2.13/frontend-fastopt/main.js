@@ -3558,7 +3558,7 @@ $c_Lapp_views_FiltroView$.prototype.apply__Lcom_raquo_airstream_state_Var__Lcom_
   var $x_45 = $n($n($m_Lcom_raquo_laminar_api_package$().Lcom_raquo_laminar_api_package$__f_L).styleAttr__Lcom_raquo_laminar_keys_HtmlAttr()).$colon$eq__O__Lcom_raquo_laminar_modifiers_KeySetter("\n          display: flex;\n          justify-content: space-around;\n          flex-wrap: wrap;\n          gap: 10px;\n          background-color: #f7f7f7;\n          padding: 10px;\n          border-radius: 10px;\n        ");
   var this$13 = $n($m_Lcom_raquo_laminar_api_package$().Lcom_raquo_laminar_api_package$__f_L);
   var $x_40 = $m_s_package$().s_package$__f_Seq;
-  var array = [new $c_T2("0", "Bebidas"), new $c_T2("1", "Navide\u00f1as"), new $c_T2("2", "Postres"), new $c_T2("3", "Platos principales"), new $c_T2("4", "Saludables"), new $c_T2("5", "Sopas")];
+  var array = [new $c_T2("0", "Sopas"), new $c_T2("1", "Bebidas"), new $c_T2("2", "Navide\u00f1as"), new $c_T2("3", "Postres"), new $c_T2("4", "Platos Principales"), new $c_T2("5", "Saludables")];
   var nodes = $as_sc_Seq($n($n($x_40).apply__sci_Seq__sc_SeqOps(new $c_sjsr_WrappedVarArgs(array))).map__F1__O(new $c_sjsr_AnonFunction1(((x0$1$2) => {
     var x0$1 = $as_T2(x0$1$2);
     if ((x0$1 !== null)) {

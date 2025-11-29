@@ -1,3 +1,13 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala:`<error>`#`<error>`.
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+
+found definition using fallback; symbol Ajax
+offset: 810
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -33,7 +43,7 @@ object ReporteView {
       val mes  = mesVar.now()
       val anio = anioVar.now()
 
-      Ajax.get(
+      @@Ajax.get(
         s"https://tl7vhlzb-8081.brs.devtunnels.ms/reportes/reporte?mes=$mes&anio=$anio"
       ).map { xhr =>
         if (xhr.status == 200) {
@@ -252,3 +262,9 @@ object ReporteView {
     )
   }
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 

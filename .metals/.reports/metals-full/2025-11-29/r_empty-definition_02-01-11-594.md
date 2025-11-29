@@ -1,3 +1,17 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala:local35
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -com/raquo/laminar/api/L.dom.
+	 -org/scalajs/dom.
+	 -dom.
+	 -scala/Predef.dom.
+offset: 7476
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -205,7 +219,7 @@ object CompraView {
               box-shadow: 0 4px 10px rgba(46, 125, 50, 0.5);
               transition: all 0.2s ease;
             """,
-            onMouseOver --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#1b5e20" },
+            onMouseOver --> { _.target.asInstanceOf[@@dom.html.Button].style.backgroundColor = "#1b5e20" },
             onMouseOut --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#2e7d32" }
           )
         ),
@@ -245,3 +259,9 @@ object CompraView {
     )
   }
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 

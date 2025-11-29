@@ -1,3 +1,22 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala:
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -com/raquo/laminar/api/L.cvv_numero.
+	 -com/raquo/laminar/api/L.cvv_numero#
+	 -com/raquo/laminar/api/L.cvv_numero().
+	 -cvv_numero.
+	 -cvv_numero#
+	 -cvv_numero().
+	 -scala/Predef.cvv_numero.
+	 -scala/Predef.cvv_numero#
+	 -scala/Predef.cvv_numero().
+offset: 1137
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -35,7 +54,7 @@ object CompraView {
         id_libro = idLibro,
         id_persona = idPersona,
         numero = numero,
-        cvv_numero = cvv
+        cv@@v_numero = cvv
       )
 
       mensajeVar.set(Some("Procesando compra..."))
@@ -245,3 +264,10 @@ object CompraView {
     )
   }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 

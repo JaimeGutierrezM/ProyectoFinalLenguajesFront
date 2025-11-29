@@ -1,3 +1,16 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala:local4
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+empty definition using fallback
+non-local guesses:
+	 -com/raquo/laminar/api/L.HtmlElement#
+	 -HtmlElement#
+	 -scala/Predef.HtmlElement#
+offset: 531
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -21,7 +34,7 @@ object ReporteView {
   def apply(
     currentView: Var[HtmlElement],
     librosVar: Var[List[PaginaPrincipal.Libro]]
-  ): HtmlElement = {
+  ): @@HtmlElement = {
 
     val mesVar = Var("")
     val anioVar = Var("")
@@ -252,3 +265,9 @@ object ReporteView {
     )
   }
 }
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 

@@ -1,3 +1,16 @@
+error id: 511AAB99E22287AC4D5D7C74426C8F2C
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala
+### java.util.NoSuchElementException: head of empty String
+
+occurred in the presentation compiler.
+
+
+
+action parameters:
+offset: 1834
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/ReporteView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -61,90 +74,48 @@ object ReporteView {
     }
 
     div(
-      styleAttr := """
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        font-family: 'Poppins', sans-serif;
-        padding-top: 30px;
+      @@styleAttr := """
+        padding: 20px;
+        font-family: Roboto, sans-serif;
       """,
 
+      h3("Reporte de Compras", styleAttr := "text-align: center; margin-bottom: 20px;"),
+
+      // Filtros
       div(
         styleAttr := """
-          width: 80%;
+          display: flex;
+          justify-content: center;
+          gap: 10px;
+          margin-bottom: 20px;
         """,
 
-        // Título
-        h2(
-          "Reportes",
-          styleAttr := """
-            font-size: 26px;
-            font-weight: 700;
-            margin-bottom: 20px;
-          """
+        input(
+          placeholder := "Mes (01-12)",
+          onInput.mapToValue --> mesVar.writer,
+          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100px;"
         ),
-
-        // Filtros
-        div(
+        input(
+          placeholder := "Año (e.g., 2025)",
+          onInput.mapToValue --> anioVar.writer,
+          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 120px;"
+        ),
+        button(
+          "Buscar",
           styleAttr := """
-            background: white;
-            padding: 25px;
-            border-radius: 14px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
           """,
-
-          div(
-            styleAttr := """
-              display: flex;
-              justify-content: flex-start;
-              gap: 25px;
-              align-items: flex-end;
-            """,
-
-            // Mes
-            div(
-              label(
-                "Mes",
-                styleAttr := """
-                  font-weight: 600;
-                  font-size: 14px;
-                """
-              ),
-              input(
-                placeholder := "Ej: 01-12",
-                onInput.mapToValue --> mesVar.writer,
-                styleAttr := """
-                  margin-top: 5px;
-                  padding: 10px;
-                  width: 180px;
-                  border-radius: 8px;
-                  border: 1px solid #DCDCDC;
-                """
-              )
-            ),
-
-            // Año
-            div(
-              label(
-                "Año",
-                styleAttr := """
-                  font-weight: 600;
-                  font-size: 14px;
-                """
-              ),
-              input(
-                placeholder := "Ej: 2025",
-                onInput.mapToValue --> anioVar.writer,
-                styleAttr := """
-                  margin-top: 5px;
-                  padding: 10px;
-                  width: 180px;
-                  border-radius: 8px;
-                  border: 1px solid #DCDCDC;
-                """
-              )
-            ),
+          onClick --> { _ => buscarReporte() },
+          disabled <-- mesVar.signal.combineWith(anioVar.signal).map { case (m, a) =>
+            m.isEmpty || a.isEmpty
+          }
+        )
+      ),
 
             // Botón Aceptar
             button(
@@ -252,3 +223,49 @@ object ReporteView {
     )
   }
 }
+
+```
+
+
+presentation compiler configuration:
+Scala version: 2.13.18
+Classpath:
+<HOME>\AppData\Local\Coursier\cache\v1\https\repo1.maven.org\maven2\org\scala-lang\scala-library\2.13.18\scala-library-2.13.18.jar [exists ]
+Options:
+
+
+
+
+
+#### Error stacktrace:
+
+```
+scala.collection.StringOps$.head$extension(StringOps.scala:1124)
+	scala.meta.internal.metals.ClassfileComparator.compare(ClassfileComparator.scala:30)
+	scala.meta.internal.metals.ClassfileComparator.compare(ClassfileComparator.scala:3)
+	java.base/java.util.PriorityQueue.siftUpUsingComparator(PriorityQueue.java:660)
+	java.base/java.util.PriorityQueue.siftUp(PriorityQueue.java:637)
+	java.base/java.util.PriorityQueue.offer(PriorityQueue.java:330)
+	java.base/java.util.PriorityQueue.add(PriorityQueue.java:311)
+	scala.meta.internal.metals.ClasspathSearch.$anonfun$search$3(ClasspathSearch.scala:32)
+	scala.meta.internal.metals.ClasspathSearch.$anonfun$search$3$adapted(ClasspathSearch.scala:26)
+	scala.collection.IterableOnceOps.foreach(IterableOnce.scala:630)
+	scala.collection.IterableOnceOps.foreach$(IterableOnce.scala:628)
+	scala.collection.AbstractIterator.foreach(Iterator.scala:1313)
+	scala.meta.internal.metals.ClasspathSearch.search(ClasspathSearch.scala:26)
+	scala.meta.internal.metals.WorkspaceSymbolProvider.search(WorkspaceSymbolProvider.scala:107)
+	scala.meta.internal.metals.MetalsSymbolSearch.search$1(MetalsSymbolSearch.scala:114)
+	scala.meta.internal.metals.MetalsSymbolSearch.search(MetalsSymbolSearch.scala:118)
+	scala.meta.internal.pc.AutoImportsProvider.autoImports(AutoImportsProvider.scala:58)
+	scala.meta.internal.pc.ScalaPresentationCompiler.$anonfun$autoImports$1(ScalaPresentationCompiler.scala:399)
+	scala.meta.internal.pc.CompilerAccess.withSharedCompiler(CompilerAccess.scala:148)
+	scala.meta.internal.pc.CompilerAccess.$anonfun$withInterruptableCompiler$1(CompilerAccess.scala:92)
+	scala.meta.internal.pc.CompilerAccess.$anonfun$onCompilerJobQueue$1(CompilerAccess.scala:209)
+	scala.meta.internal.pc.CompilerJobQueue$Job.run(CompilerJobQueue.scala:152)
+	java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1090)
+	java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:614)
+	java.base/java.lang.Thread.run(Thread.java:1474)
+```
+#### Short summary: 
+
+java.util.NoSuchElementException: head of empty String

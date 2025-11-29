@@ -1,3 +1,13 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala:local24
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+
+found definition using fallback; symbol backgroundColor
+offset: 2900
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -18,7 +28,7 @@ object CompraView {
     val numeroTarjetaVar = Var("")
     val cvvVar = Var("")
     val mensajeVar = Var(Option.empty[String])
-    val nombrePDFVar = Var(Option.empty[String]) // << NUEVO
+    val nombrePDFVar = Var(Option.empty[String])
 
     def comprar(): Unit = {
       val idLibro = libro.id_libro
@@ -52,7 +62,6 @@ object CompraView {
 
             mensajeVar.set(Some(s"¡Compra exitosa! ${response.ok.toString}"))
 
-            // Si el backend devuelve nombrePDF, iniciar descarga
             if (js.typeOf(response.nombrePDF) != "undefined") {
               val nombrePDF = response.nombrePDF.toString
               nombrePDFVar.set(Some(nombrePDF))
@@ -60,7 +69,6 @@ object CompraView {
               val enlaceDescarga =
                 s"https://tl7vhlzb-8081.brs.devtunnels.ms/comprarlibro/descargar/$nombrePDF"
 
-              // Abrir en nueva pestaña
               dom.window.open(enlaceDescarga, "_blank")
             }
 
@@ -90,7 +98,7 @@ object CompraView {
     val navButtonHover =
       onMouseOver --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#d35400" }
     val navButtonOut =
-      onMouseOut --> { _.target.asInstanceOf[dom.html.Button].style.backgroundColor = "#e67e22" }
+      onMouseOut --> { _.target.asInstanceOf[dom.html.Button].style.backgroundC@@olor = "#e67e22" }
 
     div(
       styleAttr := """
@@ -245,3 +253,10 @@ object CompraView {
     )
   }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 

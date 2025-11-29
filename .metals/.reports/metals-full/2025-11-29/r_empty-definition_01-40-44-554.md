@@ -1,3 +1,13 @@
+error id: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala:`<error>`#`<error>`.
+file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+empty definition using pc, found symbol in pc: 
+empty definition using semanticdb
+
+found definition using fallback; symbol JSON
+offset: 1552
+uri: file:///D:/ProyectoFinalLenguajesFront/frontend/src/main/scala/app/views/CompraView.scala
+text:
+```scala
 package app.views
 
 import com.raquo.laminar.api.L._
@@ -18,11 +28,11 @@ object CompraView {
     val numeroTarjetaVar = Var("")
     val cvvVar = Var("")
     val mensajeVar = Var(Option.empty[String])
-    val nombrePDFVar = Var(Option.empty[String]) // << NUEVO
+    val nombrePDFVar = Var(Option.empty[String])
 
     def comprar(): Unit = {
       val idLibro = libro.id_libro
-      val idPersona = personaVar.now().map(p => p.id_persona.toString).getOrElse("")
+      val idPersona = personaVar.now().map(p => p.id_persona.asInstanceOf[Int]).getOrElse(0)
       val numero = numeroTarjetaVar.now()
       val cvv = cvvVar.now()
 
@@ -40,37 +50,35 @@ object CompraView {
 
       mensajeVar.set(Some("Procesando compra..."))
 
-      Ajax
-        .post(
-          url = "https://tl7vhlzb-8081.brs.devtunnels.ms/comprarlibro/comprar",
-          data = JSON.stringify(data),
-          headers = Map("Content-Type" -> "application/json")
-        )
-        .map { xhr =>
-          if (xhr.status == 200) {
-            val response = JSON.parse(xhr.responseText)
+      dom.fetch(
+  "https://tl7vhlzb-8081.brs.devtunnels.ms/comprarlibro/comprar",
+  new dom.RequestInit {
+    method = "POST"
+    headers = js.Dictionary(
+      "Content-Type" -> "application/json"
+    )
+    body = JSON.stringify(data)
+  }
+).toFuture
+  .flatMap(_.text().toFuture)
+  .map { responseText =>
+    val response = @@JSON.parse(responseText)
+    mensajeVar.set(Some(s"¡Compra exitosa! ${response.ok.toString}"))
 
-            mensajeVar.set(Some(s"¡Compra exitosa! ${response.ok.toString}"))
+    if (js.typeOf(response.nombrePDF) != "undefined") {
+      val nombrePDF = response.nombrePDF.toString
+      nombrePDFVar.set(Some(nombrePDF))
 
-            // Si el backend devuelve nombrePDF, iniciar descarga
-            if (js.typeOf(response.nombrePDF) != "undefined") {
-              val nombrePDF = response.nombrePDF.toString
-              nombrePDFVar.set(Some(nombrePDF))
+      val enlaceDescarga =
+        s"https://tl7vhlzb-8081.brs.devtunnels.ms/comprarlibro/descargar/$nombrePDF"
 
-              val enlaceDescarga =
-                s"https://tl7vhlzb-8081.brs.devtunnels.ms/comprarlibro/descargar/$nombrePDF"
+      dom.window.open(enlaceDescarga, "_blank")
+    }
+  }
+  .recover { case ex =>
+    mensajeVar.set(Some("Error conectando con el servidor: " + ex.getMessage))
+  }
 
-              // Abrir en nueva pestaña
-              dom.window.open(enlaceDescarga, "_blank")
-            }
-
-          } else {
-            mensajeVar.set(Some(s"Error en la compra (código ${xhr.status}). Por favor, revisa tus datos."))
-          }
-        }
-        .recover { case ex =>
-          mensajeVar.set(Some("Error conectando con el servidor: " + ex.getMessage))
-        }
     }
 
     val navButtonStyle = """
@@ -245,3 +253,10 @@ object CompraView {
     )
   }
 }
+
+```
+
+
+#### Short summary: 
+
+empty definition using pc, found symbol in pc: 
