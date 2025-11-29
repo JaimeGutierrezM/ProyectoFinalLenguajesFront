@@ -46,81 +46,224 @@ object AnadirAdminView {
     }
 
     div(
+      // Overlay oscuro de fondo
       styleAttr := """
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        background-color: #f9f9f9;
+        z-index: 1000;
+        font-family: 'Roboto', sans-serif;
       """,
+      
+      // Cerrar al hacer clic fuera del modal
+      onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) },
 
+      // Modal card
       div(
         styleAttr := """
           background-color: white;
-          padding: 30px;
-          border-radius: 10px;
-          box-shadow: 0 0 15px rgba(0,0,0,0.2);
-          width: 300px;
+          padding: 30px 35px;
+          border-radius: 15px;
+          width: 500px;
+          max-width: 90%;
+          max-height: 90vh;
+          overflow-y: auto;
           display: flex;
           flex-direction: column;
-          gap: 12px;
+          gap: 18px;
+          box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+          position: relative;
         """,
+        
+        // Prevenir que el clic en el modal cierre el overlay
+        onClick.stopPropagation --> { _ => () },
 
-        h3("Registrar Nuevo Admin", styleAttr := "text-align: center; margin-bottom: 10px;"),
+        // ---------- HEADER con X ----------
+        div(
+          styleAttr := "display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;",
+          
+          h2(
+            child <-- Signal.fromValue("Agregar ").combineWith(Signal.fromValue("administrador")).map { case (a, b) =>
+              span(
+                span(a, styleAttr := "color: #2c3e50;"),
+                span(b, styleAttr := "color: #ff6b35;")
+              )
+            },
+            styleAttr := """
+              font-size: 1.5em;
+              font-weight: 700;
+              margin: 0;
+            """
+          ),
+          
+          // Botón X para cerrar
+          button(
+            "×",
+            styleAttr := """
+              background: transparent;
+              border: none;
+              font-size: 2em;
+              color: #999;
+              cursor: pointer;
+              padding: 0;
+              width: 30px;
+              height: 30px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: color 0.2s;
+            """,
+            onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) },
+            onMouseOver --> { e =>
+              e.target.asInstanceOf[dom.html.Element].style.color = "#333"
+            },
+            onMouseOut --> { e =>
+              e.target.asInstanceOf[dom.html.Element].style.color = "#999"
+            }
+          )
+        ),
 
-        label("Nombre"),
+        // Texto descriptivo
+        p(
+          "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
+          styleAttr := """
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin: 0 0 10px 0;
+            line-height: 1.5;
+          """
+        ),
+
+        // ---------- Nombres ----------
+        label("Nombres", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
         input(
-          placeholder := "Nombre",
+          placeholder := "Ingresa nombre completo",
+          styleAttr := """
+            padding: 12px 15px;
+            font-size: 0.95em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            transition: border 0.2s;
+            box-sizing: border-box;
+          """,
           onInput.mapToValue --> nombreVar.writer,
-          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px;"
+          onFocus --> { e =>
+            e.target.asInstanceOf[dom.html.Element].style.border = "1px solid #ff6b35"
+          },
+          onBlur --> { e =>
+            e.target.asInstanceOf[dom.html.Element].style.border = "1px solid #ddd"
+          }
         ),
 
-        label("DNI"),
+        // ---------- DNI ----------
+        label("DNI", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
         input(
-          placeholder := "DNI",
-          onInput.mapToValue --> dniVar.writer,
-          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px;"
+          placeholder := "Ingresar dni",
+          styleAttr := """
+            padding: 12px 15px;
+            font-size: 0.95em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+          """,
+          onInput.mapToValue --> dniVar.writer
         ),
 
-        label("Correo"),
+        // ---------- Correo electrónico ----------
+        label("Correo electronico", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
         input(
-          placeholder := "Correo",
-          onInput.mapToValue --> correoVar.writer,
-          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px;"
+          typ := "email",
+          placeholder := "nombre@gmail.com",
+          styleAttr := """
+            padding: 12px 15px;
+            font-size: 0.95em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+          """,
+          onInput.mapToValue --> correoVar.writer
         ),
 
-        label("Contraseña"),
+        // ---------- Contraseña ----------
+        label("Contraseña", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
         input(
           typ := "password",
-          placeholder := "Contraseña",
-          onInput.mapToValue --> contrasenaVar.writer,
-          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px;"
+          placeholder := "Agregar contraseña",
+          styleAttr := """
+            padding: 12px 15px;
+            font-size: 0.95em;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 100%;
+            box-sizing: border-box;
+          """,
+          onInput.mapToValue --> contrasenaVar.writer
         ),
 
-        button(
-          "Registrar",
-          styleAttr := """
-            background-color: #3498db;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-          """,
-          onClick --> { _ => registrarAdmin() }
-        ),
+        // ---------- BOTONES DE ACCIÓN ----------
+        div(
+          styleAttr := "display: flex; gap: 12px; margin-top: 15px;",
 
-        button(
-          "Volver",
-          styleAttr := """
-            background-color: #95a5a6;
-            color: white;
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-          """,
-          onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) }
+          // Botón Cancelar
+          button(
+            "Cancelar",
+            styleAttr := """
+              flex: 1;
+              background: white;
+              border: 1px solid #ddd;
+              color: #666;
+              padding: 12px;
+              font-size: 0.95em;
+              font-weight: 600;
+              border-radius: 8px;
+              cursor: pointer;
+              transition: all 0.2s;
+            """,
+            onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) },
+            onMouseOver --> { e =>
+              val btn = e.target.asInstanceOf[dom.html.Element]
+              btn.style.background = "#f5f5f5"
+            },
+            onMouseOut --> { e =>
+              val btn = e.target.asInstanceOf[dom.html.Element]
+              btn.style.background = "white"
+            }
+          ),
+
+          // Botón Agregar Admin
+          button(
+            "Agregar Admin",
+            styleAttr := """
+              flex: 1;
+              background: #3B6B3C;
+              border: none;
+              color: white;
+              padding: 12px;
+              font-size: 0.95em;
+              font-weight: 600;
+              border-radius: 8px;
+              cursor: pointer;
+              transition: all 0.2s;
+            """,
+            onClick --> { _ => registrarAdmin() },
+            onMouseOver --> { e =>
+              val btn = e.target.asInstanceOf[dom.html.Element]
+              btn.style.background = "#3B6B3C"
+            },
+            onMouseOut --> { e =>
+              val btn = e.target.asInstanceOf[dom.html.Element]
+              btn.style.background = "#3B6B3C"
+            }
+          )
         )
       )
     )

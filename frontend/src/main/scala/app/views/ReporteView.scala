@@ -8,6 +8,7 @@ import scala.scalajs.js.JSON
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 object ReporteView {
+
   case class Compra(
     nombreLibro: String,
     categoria: String,
@@ -19,7 +20,7 @@ object ReporteView {
 
   def apply(
     currentView: Var[HtmlElement],
-    librosVar: Var[List[PaginaPrincipal.Libro]] // por coherencia, aunque aquí no lo usamos
+    librosVar: Var[List[PaginaPrincipal.Libro]]
   ): HtmlElement = {
 
     val mesVar = Var("")
@@ -27,142 +28,226 @@ object ReporteView {
     val comprasVar = Var(List.empty[Compra])
     val totalVar = Var(0.0)
 
-    // Función para buscar
+    // Buscar reportes
     def buscarReporte(): Unit = {
-      val mes = mesVar.now()
+      val mes  = mesVar.now()
       val anio = anioVar.now()
 
-      Ajax.get(s"https://tl7vhlzb-8081.brs.devtunnels.ms/reportes/reporte?mes=$mes&anio=$anio")
-        .map { xhr =>
-            if (xhr.status == 200) {
-                val json = JSON.parse(xhr.responseText)
-                val data = json.reporte.asInstanceOf[js.Array[js.Dynamic]]
-                val total = json.total.toString.toDouble
+      Ajax.get(
+        s"https://tl7vhlzb-8081.brs.devtunnels.ms/reportes/reporte?mes=$mes&anio=$anio"
+      ).map { xhr =>
+        if (xhr.status == 200) {
+          val json = JSON.parse(xhr.responseText)
+          val data = json.reporte.asInstanceOf[js.Array[js.Dynamic]]
+          val total = json.total.toString.toDouble
 
-                val compras = data.map { item =>
-                Compra(
-                    nombreLibro = item.nombre_libro.toString,
-                    categoria = item.categoria.toString,
-                    nombrePersona = item.nombre_persona.toString,
-                    dni = item.dni.toString,
-                    correo = item.correo.toString,
-                    precio = item.precio.toString.toDouble
-                )
-                }.toList
+          val compras = data.map { item =>
+            Compra(
+              nombreLibro    = item.nombre_libro.toString,
+              categoria      = item.categoria.toString,
+              nombrePersona  = item.nombre_persona.toString,
+              dni            = item.dni.toString,
+              correo         = item.correo.toString,
+              precio         = item.precio.toString.toDouble
+            )
+          }.toList
 
-                comprasVar.set(compras)
-                totalVar.set(total)
-            } else {
-                dom.window.alert("Error obteniendo reporte: " + xhr.status)
-            }
-        }
-
-        .recover { case ex =>
-          dom.window.alert("Error al obtener reporte: " + ex.getMessage)
-        }
+          comprasVar.set(compras)
+          totalVar.set(total)
+        } else dom.window.alert("Error obteniendo reporte.")
+      }.recover { case ex =>
+        dom.window.alert("Error: " + ex.getMessage)
+      }
     }
 
     div(
       styleAttr := """
-        padding: 20px;
-        font-family: Roboto, sans-serif;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        font-family: 'Poppins', sans-serif;
+        padding-top: 30px;
       """,
 
-      h3("Reporte de Compras", styleAttr := "text-align: center; margin-bottom: 20px;"),
-
-      // Filtros
       div(
         styleAttr := """
-          display: flex;
-          justify-content: center;
-          gap: 10px;
-          margin-bottom: 20px;
+          width: 80%;
         """,
 
-        input(
-          placeholder := "Mes (01-12)",
-          onInput.mapToValue --> mesVar.writer,
-          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 100px;"
-        ),
-        input(
-          placeholder := "Año (e.g., 2025)",
-          onInput.mapToValue --> anioVar.writer,
-          styleAttr := "padding: 8px; border: 1px solid #ccc; border-radius: 5px; width: 120px;"
-        ),
-        button(
-          "Buscar",
+        // Título
+        h2(
+          "Reportes",
           styleAttr := """
-            background-color: #3498db;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 5px;
-            cursor: pointer;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 20px;
+          """
+        ),
+
+        // Filtros
+        div(
+          styleAttr := """
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
           """,
-          onClick --> { _ => buscarReporte() },
-          disabled <-- mesVar.signal.combineWith(anioVar.signal).map { case (m, a) =>
-            m.isEmpty || a.isEmpty
-          }
-        )
-      ),
 
-      // Tabla
-      table(
-        styleAttr := """
-          width: 100%;
-          border-collapse: collapse;
-          margin-bottom: 20px;
-        """,
+          div(
+            styleAttr := """
+              display: flex;
+              justify-content: flex-start;
+              gap: 25px;
+              align-items: flex-end;
+            """,
 
-        thead(
-          tr(
-            th("Nombre Libro", styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-            th("Categoría", styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-            th("Nombre Persona", styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-            th("DNI", styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-            th("Correo", styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-            th("Precio", styleAttr := "border: 1px solid #ccc; padding: 8px;")
+            // Mes
+            div(
+              label(
+                "Mes",
+                styleAttr := """
+                  font-weight: 600;
+                  font-size: 14px;
+                """
+              ),
+              input(
+                placeholder := "Ej: 01-12",
+                onInput.mapToValue --> mesVar.writer,
+                styleAttr := """
+                  margin-top: 5px;
+                  padding: 10px;
+                  width: 180px;
+                  border-radius: 8px;
+                  border: 1px solid #DCDCDC;
+                """
+              )
+            ),
+
+            // Año
+            div(
+              label(
+                "Año",
+                styleAttr := """
+                  font-weight: 600;
+                  font-size: 14px;
+                """
+              ),
+              input(
+                placeholder := "Ej: 2025",
+                onInput.mapToValue --> anioVar.writer,
+                styleAttr := """
+                  margin-top: 5px;
+                  padding: 10px;
+                  width: 180px;
+                  border-radius: 8px;
+                  border: 1px solid #DCDCDC;
+                """
+              )
+            ),
+
+            // Botón Aceptar
+            button(
+              "Aceptar",
+              onClick --> { _ => buscarReporte() },
+              disabled <-- mesVar.signal.combineWith(anioVar.signal).map { case (m, a) =>
+                m.isEmpty || a.isEmpty
+              },
+              styleAttr := """
+                background: #FF7A00;
+                color: white;
+                border: none;
+                padding: 10px 25px;
+                border-radius: 8px;
+                font-weight: 600;
+                cursor: pointer;
+                margin-bottom: 3px;
+              """
+            )
           )
         ),
-        tbody(
-          children <-- comprasVar.signal.map(_.map { compra =>
-            tr(
-              td(compra.nombreLibro, styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-              td(compra.categoria, styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-              td(compra.nombrePersona, styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-              td(compra.dni, styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-              td(compra.correo, styleAttr := "border: 1px solid #ccc; padding: 8px;"),
-              td(f"${compra.precio}%.2f", styleAttr := "border: 1px solid #ccc; padding: 8px; text-align: right;")
+
+        // Tabla de reportes
+        div(
+          styleAttr := """
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+          """,
+
+          table(
+            styleAttr := """
+              width: 100%;
+              border-collapse: separate;
+              border-spacing: 0 12px;
+            """,
+
+            thead(
+              tr(
+                List("Título", "Categoría", "Cliente", "DNI", "Correo", "Precio").map { titulo =>
+                  th(
+                    titulo,
+                    styleAttr := """
+                      text-align: left;
+                      padding: 10px;
+                      font-size: 14px;
+                      font-weight: 600;
+                      color: #444;
+                    """
+                  )
+                }
+              )
+            ),
+
+            tbody(
+              children <-- comprasVar.signal.map(
+                _.map { c =>
+                  tr(
+                    styleAttr := """
+                      background: #F8F8F8;
+                      border-radius: 10px;
+                    """,
+
+                    td(c.nombreLibro, styleAttr := "padding: 12px;"),
+                    td(c.categoria, styleAttr := "padding: 12px;"),
+                    td(c.nombrePersona, styleAttr := "padding: 12px;"),
+                    td(c.dni, styleAttr := "padding: 12px;"),
+                    td(c.correo, styleAttr := "padding: 12px;"),
+                    td(f"S/ ${c.precio}%.2f", styleAttr := "padding: 12px; font-weight: 600;")
+                  )
+                }
+              )
             )
-          })
+          ),
+
+          // TOTAL
+          div(
+            styleAttr := """
+              margin-top: 20px;
+              display: flex;
+              justify-content: flex-end;
+              font-size: 18px;
+              font-weight: bold;
+            """,
+            span("Total: S/ "),
+            child.text <-- totalVar.signal.map(t => f"$t%.2f")
+          )
+        ),
+
+        button(
+          "Volver",
+          onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) },
+          styleAttr := """
+            margin-top: 25px;
+            background: #A6A6A6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+          """
         )
-      ),
-
-      // Total
-      div(
-        styleAttr := """
-          display: flex;
-          justify-content: flex-end;
-          font-weight: bold;
-          font-size: 16px;
-        """,
-        span("Total: "),
-        child.text <-- totalVar.signal.map(t => f" S/. $t%.2f")
-      ),
-
-      // Volver
-      button(
-        "Volver",
-        styleAttr := """
-          margin-top: 20px;
-          background-color: #95a5a6;
-          color: white;
-          padding: 10px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-        """,
-        onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) }
       )
     )
   }

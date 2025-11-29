@@ -9,12 +9,12 @@ object Main {
     // 1. Variable de libros
     val librosVar = Var(
       List(
-        PaginaPrincipal.Libro(1, "Cocteles para todos", 20.0, "1", "Bebidas", "libro1.pdf", "assets/libro1.jpg"),
-        PaginaPrincipal.Libro(2, "Cenas Navideñas llenas de magia", 25.0, "2", "Navideñas", "libro2.pdf", "assets/libro2.jpg"),
-        PaginaPrincipal.Libro(3, "¡Bravazo!", 30.0, "3", "Platos principales", "libro6.pdf", "assets/libro6.jpg"),
-        PaginaPrincipal.Libro(4, "Dulces caseros", 22.0, "4", "Postres", "libro3.pdf", "assets/libro3.jpg"),
-        PaginaPrincipal.Libro(5, "Quien te quiere te cocina cerca", 28.0, "5", "Saludable", "libro4.pdf", "assets/libro4.jpg"),
-        PaginaPrincipal.Libro(6, "Recetario invierno", 35.0, "6", "Sopas", "libro5.pdf", "assets/libro5.jpg")
+        PaginaPrincipal.Libro(1, "Cazuela con verduritas", 20.0, "1", "Sopas", "CazuelaConVerduritas.pdf", "CazuelaConVerduritas.jpg"),
+        PaginaPrincipal.Libro(2, "Canelones de verduras", 25.0, "2", "Saludables", "CanelonesDeVerduras.pdf", "CanelonesDeVerduras.jpg"),
+        PaginaPrincipal.Libro(3, "Escalivada de berenjenas y pimientas", 30.0, "3", "PlatosPrincipales", "EscalivadaDeBerenjenasyPimientos.pdf", "EscalivadaDeBerenjenasyPimientos.jpg"),
+        PaginaPrincipal.Libro(4, "Crujientes de champiñones", 22.0, "4", "PlatosPrincipales", "CrujientesDeChampiñones.pdf", "CrujientesDeChampiñones.jpg"),
+        PaginaPrincipal.Libro(5, "Quien te quiere te cocina cerca", 28.0, "5", "Saludable", "SorbeteDeLimonAlCavaParaNavidad.pdf", "SorbeteDeLimonAlCavaParaNavidad.jpg"),
+        PaginaPrincipal.Libro(6, "Recetario invierno", 35.0, "6", "Sopas", "SalsaDeEsparragos.pdf", "SalsaDeEsparragos.jpg")
       )
     )
 

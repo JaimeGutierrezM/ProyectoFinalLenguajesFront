@@ -109,127 +109,187 @@ object AgregarView {
     }
 
   div(
+    // Overlay oscuro de fondo
     styleAttr := """
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
       display: flex;
       justify-content: center;
-      align-items: flex-start;
-      padding-top: 40px;
-      min-height: 100vh;
-      background-image: url('/frontend/inicioSesion.png');
-      background-size: 500px;
-      background-repeat: repeat;
-      background-position: center;
+      align-items: center;
+      z-index: 1000;
       font-family: 'Roboto', sans-serif;
     """,
+    
+    // Cerrar al hacer clic fuera del modal
+    onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) },
 
+    // Modal card
     div(
       styleAttr := """
         background-color: white;
-        padding: 35px;
-        border-radius: 20px;
-        width: 420px;
+        padding: 30px 35px;
+        border-radius: 15px;
+        width: 500px;
+        max-width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
         display: flex;
         flex-direction: column;
         gap: 18px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        position: relative;
       """,
+      
+      // Prevenir que el clic en el modal cierre el overlay
+      onClick.stopPropagation --> { _ => () },
 
-      h2(
-        "Agregar Libro",
+      // ---------- HEADER con X ----------
+      div(
+        styleAttr := "display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;",
+        
+        h2(
+          "Agregar producto",
+          styleAttr := """
+            color: #2c3e50;
+            font-size: 1.5em;
+            font-weight: 700;
+            margin: 0;
+          """
+        ),
+        
+        // Botón X para cerrar
+        button(
+          "×",
+          styleAttr := """
+            background: transparent;
+            border: none;
+            font-size: 2em;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.2s;
+          """,
+          onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) },
+          onMouseOver --> { e =>
+            e.target.asInstanceOf[dom.html.Element].style.color = "#333"
+          },
+          onMouseOut --> { e =>
+            e.target.asInstanceOf[dom.html.Element].style.color = "#999"
+          }
+        )
+      ),
+
+      // Texto descriptivo
+      p(
+        "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.",
         styleAttr := """
-          text-align: center;
-          color: #2e7d32;
-          font-size: 26px;
-          font-weight: bold;
-          margin-bottom: 12px;
+          color: #7f8c8d;
+          font-size: 0.9em;
+          margin: 0 0 10px 0;
+          line-height: 1.5;
         """
       ),
 
-      // ---------- Nombre ----------
-      label("Nombre de la receta", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      // ---------- Título de la receta ----------
+      label("Título de la receta", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
       input(
-        placeholder := "Ejemplo: Delicias Caseras",
+        placeholder := "Ejemplo : Delicias Caseras",
         styleAttr := """
-          padding: 12px;
-          font-size: 15px;
-          border: 2px solid #e0e0e0;
-          border-radius: 10px;
+          padding: 12px 15px;
+          font-size: 0.95em;
+          border: 1px solid #ddd;
+          border-radius: 8px;
           width: 100%;
-          transition: 0.2s;
+          transition: border 0.2s;
+          box-sizing: border-box;
         """,
-        onInput.mapToValue --> nombreVar.writer
-      ),
-
-      // ---------- Precio ----------
-      label("Precio", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
-      input(
-        typ := "number", stepAttr := "0.01",
-        placeholder := "Ejemplo: 19.99",
-        styleAttr := """
-          padding: 12px;
-          font-size: 15px;
-          border: 2px solid #e0e0e0;
-          border-radius: 10px;
-          width: 100%;
-        """,
-        onInput.mapToValue --> precioVar.writer
+        onInput.mapToValue --> nombreVar.writer,
+        onFocus --> { e =>
+          e.target.asInstanceOf[dom.html.Element].style.border = "1px solid #ff6b35"
+        },
+        onBlur --> { e =>
+          e.target.asInstanceOf[dom.html.Element].style.border = "1px solid #ddd"
+        }
       ),
 
       // ---------- Categoría ----------
-      label("Categoría", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      label("Categoría", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
       select(
         onChange.mapToValue --> categoriaSeleccionada.writer,
         styleAttr := """
-          padding: 12px;
-          font-size: 15px;
-          border: 2px solid #e0e0e0;
-          border-radius: 10px;
+          padding: 12px 15px;
+          font-size: 0.95em;
+          border: 1px solid #ddd;
+          border-radius: 8px;
           width: 100%;
           background-color: #fff;
+          cursor: pointer;
+          box-sizing: border-box;
         """,
+        option(value := "", "Selecciona la categoría", disabled := true, selected := true),
         children <-- categoriasVar.signal.map(_.map { cat =>
           option(value := cat.id.toString, cat.nombre)
         })
       ),
 
-      // ---------- PDF ----------
-      label("Archivo PDF", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
-      div(
-        styleAttr := "display: flex; flex-direction: column; gap: 6px;",
+      // ---------- Precio ----------
+      label("Precio", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
+      input(
+        typ := "number", stepAttr := "0.01",
+        placeholder := "S/",
+        styleAttr := """
+          padding: 12px 15px;
+          font-size: 0.95em;
+          border: 1px solid #ddd;
+          border-radius: 8px;
+          width: 100%;
+          box-sizing: border-box;
+        """,
+        onInput.mapToValue --> precioVar.writer
+      ),
 
-        // Botón estilizado
+      // ---------- Archivo PDF ----------
+      label("Archivo PDF", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
+      div(
+        styleAttr := "display: flex; flex-direction: column; gap: 8px;",
+
+        // Botón subir PDF
         button(
           "Subir PDF",
           styleAttr := """
-            bwidth: 100%;
-            background: white;
-            border: 2px solid #ff6b00;
-            color: #ff6b00;
-            font-weight: bold;
-            padding: 13px;
-            border-radius: 30px;
+            width: 100%;
+            background: transparent;
+            border: 2px dashed #ff6b35;
+            color: #ff6b35;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
-            transition: 0.3s;
+            font-size: 0.95em;
+            transition: all 0.2s;
           """,
           onClick --> { _ =>
             dom.document.getElementById("pdfFileInput").asInstanceOf[dom.html.Input].click()
           },
           onMouseOver --> { e =>
             val btn = e.target.asInstanceOf[dom.html.Element]
-            btn.style.backgroundColor = "#ff6b00"
-            btn.style.color = "white"
-            btn.style.border = "2px solid #ff6b00"
+            btn.style.background = "#fff5f0"
           },
           onMouseOut --> { e =>
             val btn = e.target.asInstanceOf[dom.html.Element]
-            btn.style.backgroundColor = "white"
-            btn.style.color = "#ff6b00"
-            btn.style.border = "2px solid #ff6b00"
+            btn.style.background = "transparent"
           }
         ),
 
-        // Input real oculto
         input(
           idAttr := "pdfFileInput",
           typ := "file",
@@ -238,53 +298,46 @@ object AgregarView {
           onChange.mapToFiles --> { files => pdfFileVar.set(files.headOption) }
         ),
 
-        // Nombre del archivo
         child.maybe <-- pdfFileVar.signal.map(_.map(f => 
           div(
-            s"Archivo: ${f.name}",
-            styleAttr := "font-size: 13px; color: #555; margin-left: 4px;"
+            s"📄 ${f.name}",
+            styleAttr := "font-size: 0.85em; color: #666; padding: 5px 10px; background: #f5f5f5; border-radius: 5px;"
           )
         ))
       ),
 
-      // ---------- Imagen ----------
-      label("Imagen de portada", styleAttr := "font-weight: bold; color: #333; font-size: 15px;"),
+      // ---------- Imagen de portada ----------
+      label("Imagen de portada", styleAttr := "font-weight: 600; color: #333; font-size: 0.95em; margin-bottom: -10px;"),
       div(
-        styleAttr := "display: flex; flex-direction: column; gap: 6px;",
+        styleAttr := "display: flex; flex-direction: column; gap: 8px;",
 
-        // Botón estilizado
         button(
-          "Subir Imagen",
+          "Subir imagen",
           styleAttr := """
-            bwidth: 100%;
-            background: white;
-            border: 2px solid #ff6b00;
-            color: #ff6b00;
-            font-weight: bold;
-            padding: 13px;
-            border-radius: 30px;
+            width: 100%;
+            background: transparent;
+            border: 2px dashed #ff6b35;
+            color: #ff6b35;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
-            transition: 0.3s;
-          """.stripMargin,
+            font-size: 0.95em;
+            transition: all 0.2s;
+          """,
           onClick --> { _ =>
             dom.document.getElementById("imgFileInput").asInstanceOf[dom.html.Input].click()
           },
           onMouseOver --> { e =>
             val btn = e.target.asInstanceOf[dom.html.Element]
-            btn.style.backgroundColor = "#ff6b00"
-            btn.style.color = "white"
-            btn.style.border = "2px solid #ff6b00"
+            btn.style.background = "#fff5f0"
           },
           onMouseOut --> { e =>
             val btn = e.target.asInstanceOf[dom.html.Element]
-            btn.style.backgroundColor = "white"
-            btn.style.color = "#ff6b00"
-            btn.style.border = "2px solid #ff6b00"
+            btn.style.background = "transparent"
           }
         ),
 
-        // Input real oculto
         input(
           idAttr := "imgFileInput",
           typ := "file",
@@ -293,45 +346,69 @@ object AgregarView {
           onChange.mapToFiles --> { files => imagenFileVar.set(files.headOption) }
         ),
 
-        // Nombre del archivo
         child.maybe <-- imagenFileVar.signal.map(_.map(f => 
           div(
-            s"Imagen: ${f.name}",
-            styleAttr := "font-size: 13px; color: #555; margin-left: 4px;"
+            s"${f.name}",
+            styleAttr := "font-size: 0.85em; color: #666; padding: 5px 10px; background: #f5f5f5; border-radius: 5px;"
           )
         ))
       ),
 
-      // ---------- Botón agregar ----------
-      button(
-        "Agregar",
-        styleAttr := """
-          background-color: #2e7d32;
-          color: white;
-          padding: 12px;
-          font-size: 16px;
-          font-weight: bold;
-          border: none;
-          border-radius: 12px;
-          cursor: pointer;
-          transition: 0.2s;
-        """,
-        onClick --> { _ => agregarLibro() }
-      ),
+      // ---------- BOTONES DE ACCIÓN ----------
+      div(
+        styleAttr := "display: flex; gap: 12px; margin-top: 15px;",
 
-      // ---------- Botón volver ----------
-      a(
-        "← Atrás",
-        href := "#",
-        onClick.preventDefault --> { _ => currentView.set(AdminView(currentView, librosVar)) },
-        styleAttr := """
-          display: block; 
-          margin-top: 20px; 
-          color: #7f8c8d; 
-          text-decoration: none; 
-          font-size: 14px; 
-          text-align: left;
-        """
+        // Botón Cancelar
+        button(
+          "Cancelar",
+          styleAttr := """
+            flex: 1;
+            background: white;
+            border: 1px solid #ddd;
+            color: #666;
+            padding: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+          """,
+          onClick --> { _ => currentView.set(AdminView(currentView, librosVar)) },
+          onMouseOver --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.background = "#f5f5f5"
+          },
+          onMouseOut --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.background = "white"
+          }
+        ),
+
+        // Botón Agregar libro
+        button(
+          "Agregar libro",
+          styleAttr := """
+            flex: 1;
+            background: #3B6B3C;
+            border: none;
+            color: white;
+            padding: 12px;
+            font-size: 0.95em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+          """,
+          onClick --> { _ => agregarLibro() },
+          onMouseOver --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.background = "#3B6B3C"
+          },
+          onMouseOut --> { e =>
+            val btn = e.target.asInstanceOf[dom.html.Element]
+            btn.style.background = "#3B6B3C"
+          }
+        )
       )
     )
   )

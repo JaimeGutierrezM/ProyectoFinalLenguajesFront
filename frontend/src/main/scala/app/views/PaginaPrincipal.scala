@@ -23,7 +23,7 @@ object PaginaPrincipal {
   def apply(currentView: Var[HtmlElement], librosVar: Var[List[Libro]]): HtmlElement = {
 
     div(
-      // ---------- HERO (fondo compartido + cabecera + slogan) ----------
+      // ---------- HERO ----------
       div(
         // contenedor con fondo (imagen local)
         styleAttr := """
@@ -185,7 +185,12 @@ object PaginaPrincipal {
               overflow: hidden;
               animation: fadeIn 0.7s ease;
             """,
-            onMouseEnter --> { _ => /* opcional: animación hover */ },
+            onMouseEnter --> { _ => 
+              dom.document.body.style.cursor = "pointer"
+            },
+            onMouseLeave --> { _ =>
+              dom.document.body.style.cursor = "default"
+            },
             img(
               src := s"https://tl7vhlzb-8081.brs.devtunnels.ms/frontimg/imagen/${libro.nombreimagen}",
               alt := libro.nombre,
